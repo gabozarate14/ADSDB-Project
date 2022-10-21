@@ -1,0 +1,11 @@
+InstallationID,InstallationUniqueID,InstallationName,InstallationTimezone,InstallationTypologyID,DataSourceID,InstallationStatus
+1,06865efd-f15e-09b4-6ee6-d4a00163a14a,CEM 1,Europe/Madrid,1,1,1
+2,8c9de7b7-3bf2-02eb-270c-4aa8420d75d2,CEM 2,Europe/Madrid,1,1,1
+3,ece57cc2-ad9d-09fb-9b43-3c8a8171f14e,CEM 3,Europe/Madrid,1,1,1
+4,b8e6051d-bf8a-b4ff-1eed-9db68b1e81ad,CEM 4,Europe/Madrid,1,1,1
+5,bdb19a1b-ce5e-11e9-9dab-fa163ed018d4,Escola 1,Europe/Madrid,1,1,1
+6,31348c30-bfdd-e01e-9618-105ecfbbb070,Escola 2,Europe/Madrid,1,1,1
+7,526dc81f-cfc5-8af9-a703-3e13fd6a288a,Escola 3,Europe/Madrid,1,1,1
+8,f4817826-45cb-5793-1f91-f4879c4499aa,Escola 4,Europe/Madrid,1,1,1
+9,64f4ae1a-bd2a-6c49-35b3-7f97eac65a74,Escola 5,Europe/Madrid,1,1,1
+10,431b250d-d3a2-11e9-9dab-fa163ed018d4,Escola 6,Europe/Madrid,1,1,1
