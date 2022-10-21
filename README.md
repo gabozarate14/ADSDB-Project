@@ -9,3 +9,8 @@
 
 $ pip install -U -r requirements.txt
 
+### Execution
+
+$ python main.py
+
+
