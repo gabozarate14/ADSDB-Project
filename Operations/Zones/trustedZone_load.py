@@ -41,30 +41,26 @@ def trustedZone_load():
         table_trusted = table_formatted[0:p]
       else:
         table_trusted = table_formatted
-      
+
       #Gets the data from formatted zone
       df_source=cursor_formatted.execute('select * from ' + table_formatted).fetchdf()
+      
+      print(table_formatted+' -> '+table_trusted)
       
       #Reviews if the table exists in the trusted zone
       
       #If it exists it updates the table
       if table_trusted in  tablenames_trusted:
 
-        #First we verify if the data includes new columns
+        #Here we concat the new table to the old table
         df_old = con_trusted.execute('SELECT * FROM '+ table_trusted).fetchdf()
         old_cols = set(df_old.columns)
         new_cols = set(df_source.columns)
         upd_cols = new_cols - old_cols
 
-        #If there are new columns we update the table columns
-        if(len(upd_cols)!=0):
-          df_union = pd.concat([df_old, df_source], ignore_index=True)
-          con_trusted.execute('DROP TABLE '+ table_trusted)
-          con_trusted.execute('CREATE TABLE IF NOT EXISTS ' + table_trusted + ' AS SELECT * FROM df_union')
-        
-        #If there are no new columns, we olny add the new rows
-        else:
-          con_trusted.execute('INSERT INTO ' + table_trusted + ' SELECT * FROM df_source')
+        df_union = pd.concat([df_old, df_source], ignore_index=True)
+        con_trusted.execute('DROP TABLE '+ table_trusted)
+        con_trusted.execute('CREATE TABLE IF NOT EXISTS ' + table_trusted + ' AS SELECT * FROM df_union')
       
       #If it not exits it creates the table (only works on the first execution)
       else:
@@ -73,13 +69,8 @@ def trustedZone_load():
 
       #Registers the tablename in tables_loaded
       con_trusted.execute("INSERT INTO tables_loaded VALUES (NEXTVAL('tables_loaded_id'), '"+ table_formatted +"' , current_timestamp)")
-
-
-  cursor_trusted = con_trusted.cursor()
-  df=cursor_trusted.execute("select tablename from pg_tables where tablename not in ('tables_loaded')").fetchdf()
-  for tableName in df['tablename']:
-    df=cursor_trusted.execute(f"select * from {tableName}").fetchdf()
-    print(tableName)
+  
+  
 
   """Closing the DB connection"""
 
