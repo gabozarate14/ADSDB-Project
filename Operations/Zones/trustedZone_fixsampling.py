@@ -24,16 +24,19 @@ def trustedZone_fixsampling():
   """## Function to fix Timestamp"""
 
   # If the timestamp is not to an exact quarter minute, it is forced to the exact value to facilitate the check and next tasks.
-  def fixTimeStamp(stringTs):
-    dt=datetime.strptime(stringTs, '%Y-%m-%d %H:%M:%S')
-    if dt.minute >= 0 and dt.minute < 15: dt = dt.replace(minute=0,second=0)
-    elif dt.minute >= 15 and dt.minute < 30: dt = dt.replace(minute=15,second=0)
-    elif dt.minute >= 30 and dt.minute < 45: dt = dt.replace(minute=30,second=0)
-    elif dt.minute >= 45 and dt.minute <= 59: dt = dt.replace(minute=45,second=0)
+  def fixTimeStamp(stringTs, flag):
+    if flag:
+      dt=datetime.strptime(stringTs, '%Y-%m-%d %H:%M:%S')
+      if dt.minute >= 0 and dt.minute < 15: dt = dt.replace(minute=0,second=0)
+      elif dt.minute >= 15 and dt.minute < 30: dt = dt.replace(minute=15,second=0)
+      elif dt.minute >= 30 and dt.minute < 45: dt = dt.replace(minute=30,second=0)
+      elif dt.minute >= 45 and dt.minute <= 59: dt = dt.replace(minute=45,second=0)
+    else:
+      dt=datetime.strptime(stringTs, '%Y-%m-%d')
     return dt
 
   df_tables=cursor_trusted.execute('select * from pg_tables').fetchdf()
-  tablesToCheck = ["humidity", "weather", "precipitations", "observations"]   # Tables with timestamps
+  tablesToCheck = ["humidity", "weather", "precipitations", "observations", "wind", "holidays"]   # Tables with timestamps
 
   for tableName in df_tables['tablename']:
     if tableName in tablesToCheck:
@@ -42,12 +45,18 @@ def trustedZone_fixsampling():
       if "observations" in tableName:
         timeStampColName = "published_at"
         subsetDuplicates = [timeStampColName,'sensorid']
+        flag = True
+      elif "holidays" in tableName:
+        timeStampColName = "date"
+        subsetDuplicates = [timeStampColName]
+        flag = False
       else:
         timeStampColName = "timestamp"
         subsetDuplicates = [timeStampColName]
+        flag = True
 
       # Fix TimeStamp format
-      df[timeStampColName] = df.apply(lambda row: fixTimeStamp(str(row[timeStampColName])), axis=1)
+      df[timeStampColName] = df.apply(lambda row: fixTimeStamp(str(row[timeStampColName]), flag), axis=1)
       
       #if "weather" in tableName: display(df.iloc[6434:6445,:])      # Show the example in the report
 
