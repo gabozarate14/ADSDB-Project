@@ -32,7 +32,7 @@ def trustedZone_fixsampling():
       elif dt.minute >= 30 and dt.minute < 45: dt = dt.replace(minute=30,second=0)
       elif dt.minute >= 45 and dt.minute <= 59: dt = dt.replace(minute=45,second=0)
     else:
-      dt=datetime.strptime(stringTs, '%Y-%m-%d')
+      dt=datetime.strptime(stringTs.split(' ')[0], '%Y-%m-%d')
     return dt
 
   df_tables=cursor_trusted.execute('select * from pg_tables').fetchdf()
