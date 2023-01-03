@@ -61,7 +61,10 @@ def formattedZone():
             df = pd.DataFrame.from_records(data['measurements'])
             tablename = filename.replace("measurements", "").replace(".json", "")
         
-        #Now we review if the new data to be
+        else:
+          continue
+        
+        #Now we review if the new data to be    
 
         con.execute('CREATE TABLE IF NOT EXISTS ' + tablename + ' AS SELECT * FROM df')
 
