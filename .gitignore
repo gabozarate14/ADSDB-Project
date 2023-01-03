@@ -1,3 +1,4 @@
 *.pyc
 *.duckdb
-Data Storage/Landing Zone/Persistent Landing/Data/*
+Data Storage/Landing Zone/Persistent Landing/Data/*.csv
+Data Storage/Landing Zone/Persistent Landing/Data/*.json
