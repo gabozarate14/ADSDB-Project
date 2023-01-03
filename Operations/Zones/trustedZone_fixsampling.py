@@ -32,6 +32,7 @@ def trustedZone_fixsampling():
       elif dt.minute >= 30 and dt.minute < 45: dt = dt.replace(minute=30,second=0)
       elif dt.minute >= 45 and dt.minute <= 59: dt = dt.replace(minute=45,second=0)
     else:
+      print(stringTs)
       dt=datetime.strptime(stringTs.split(' ')[0], '%Y-%m-%d')
     return dt
 
@@ -55,6 +56,8 @@ def trustedZone_fixsampling():
         subsetDuplicates = [timeStampColName]
         flag = True
 
+      if "holidays" in tableName:
+        print(df[timeStampColName])
       # Fix TimeStamp format
       df[timeStampColName] = df.apply(lambda row: fixTimeStamp(str(row[timeStampColName]), flag), axis=1)
       
