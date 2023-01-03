@@ -3,6 +3,7 @@ import Zones.persistentLanding as pl
 import Zones.formattedZone as fz
 import Zones.trustedZone as tz
 import Zones.exploitationZone as ez
+import Zones.featGenModelZone as fgmz
 import warnings
 
 def fxn():
@@ -16,6 +17,9 @@ def main():
 	with warnings.catch_warnings():
 		warnings.simplefilter("ignore")
 		fxn()
+		printLine()
+		print('DATA MANAGEMENT')
+		printLine()
 		print('STARTING LOADING')
 		printLine()
 		print('1. Landing Zone:')
@@ -43,6 +47,10 @@ def main():
 		ez.exploitationZone()
 		printLine()
 		print('LOADING FINISHED')
+		printLine()
+		print('DATA ANALYSIS')
+		printLine()
+		fgmz.featGenModelZone()
 
 
 if __name__ == "__main__":
